@@ -19,7 +19,7 @@ public abstract class Problem {
 		ArrayList<Node> nodes = new ArrayList<Node>();
 		nodes.add(new Node(initialState));
 		while (!nodes.isEmpty()) {
-			Node currentNode = nodes.remove(nodes.size() - 1);
+			Node currentNode = nodes.remove(0);
 			if (goalTest(currentNode.getState())) {
 				return currentNode;
 			}
