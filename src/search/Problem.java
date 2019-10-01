@@ -27,4 +27,20 @@ public abstract class Problem {
 		}
 		throw new SolutionNotFoundException();
 	}
+
+	public State getInitialState() {
+		return initialState;
+	}
+
+	public void setInitialState(State initialState) {
+		this.initialState = initialState;
+	}
+
+	public Operator[] getOperators() {
+		return operators;
+	}
+
+	public void setOperators(Operator[] operators) {
+		this.operators = operators;
+	}
 }
