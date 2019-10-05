@@ -1,6 +1,6 @@
 package exceptions;
 
-public class TooMuchDamageException extends Exception {
+public class CannotCollectException extends OperatorFailedException {
     /**
      *
      */

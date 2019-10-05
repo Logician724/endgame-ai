@@ -1,6 +1,10 @@
 package search;
 
 public class SolutionNotFoundException extends Exception {
-	public SolutionNotFoundException() { 
-	}
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+
 }
