@@ -1,5 +1,9 @@
 package cells;
 
-public class StoneCell extends Cell {
+import java.awt.Point;
 
+public class StoneCell extends Cell {
+    public StoneCell(Point loc) {
+        super(loc);
+    }
 }
