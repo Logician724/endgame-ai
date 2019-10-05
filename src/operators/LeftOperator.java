@@ -1,11 +1,20 @@
 package operators;
 
 import search.Operator;
+import java.awt.Point;
 
-public class LeftOperator extends Operator {
+import endgame.EndGameState;
 
-    public LeftOperator() {
-        super(1);
+public class LeftOperator extends Operator implements Transitionable {
+
+    public LeftOperator(Point mapDimensions) {
+        super(1, mapDimensions);
+    }
+
+    @Override
+    public EndGameState transition(EndGameState currentState) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

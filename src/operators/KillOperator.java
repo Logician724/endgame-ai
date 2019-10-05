@@ -1,11 +1,20 @@
 package operators;
 
 import search.Operator;
+import java.awt.Point;
 
-public class KillOperator extends Operator {
+import endgame.EndGameState;
 
-    public KillOperator() {
-        super(1);
+public class KillOperator extends Operator implements Transitionable {
+
+    public KillOperator(Point mapDimensions) {
+        super(1, mapDimensions);
+    }
+
+    @Override
+    public EndGameState transition(EndGameState currentState) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

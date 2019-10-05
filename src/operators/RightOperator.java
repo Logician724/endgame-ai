@@ -1,11 +1,19 @@
 package operators;
 
 import search.Operator;
+import java.awt.Point;
 
-public class RightOperator extends Operator {
+import endgame.EndGameState;
 
-    public RightOperator() {
-        super(1);
+public class RightOperator extends Operator implements Transitionable {
+
+    public RightOperator(Point mapDimensions) {
+        super(1, mapDimensions);
     }
 
+    @Override
+    public EndGameState transition(EndGameState currentState) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

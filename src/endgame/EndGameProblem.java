@@ -2,22 +2,24 @@ package endgame;
 
 import java.util.ArrayList;
 
-import cells.Cell;
-import cells.EmptyCell;
-import cells.IronManCell;
-import cells.StoneCell;
+import cells.*;
 import search.Node;
 import search.Operator;
 import search.Problem;
 import search.State;
 import java.awt.Point;
+import operators.*;
 
 public class EndGameProblem extends Problem {
 	private Point mapDimensions;
 
 	public EndGameProblem(Point ironManLoc, Point thanosLoc, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc,
 			Point mapDimensions) {
-		super.setInitialState(new EndGameState(ironManLoc, stonesLoc, warriorsLoc, thanosLoc));
+
+		super(new EndGameState(ironManLoc, stonesLoc, warriorsLoc, thanosLoc),
+				new Operator[] { new UpOperator(mapDimensions), new DownOperator(mapDimensions),
+						new LeftOperator(mapDimensions), new RightOperator(mapDimensions), new CollectOperator(),
+						new KillOperator(mapDimensions), new SnapOperator() });
 		this.mapDimensions = mapDimensions;
 	}
 
@@ -35,8 +37,7 @@ public class EndGameProblem extends Problem {
 
 	@Override
 	public boolean goalTest(State currentState) {
-		// TODO Auto-generated method stub
-		return false;
+		return ((EndGameState) currentState).getThanosLoc() == null ? true : false;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class EndGameProblem extends Problem {
 			map[stoneLoc.x][stoneLoc.y] = new StoneCell(stoneLoc);
 
 		for (Point warriorLoc : state.getWarriorsLoc())
-			map[warriorLoc.x][warriorLoc.y] = new StoneCell(warriorLoc);
+			map[warriorLoc.x][warriorLoc.y] = new WarriorCell(warriorLoc);
 
 		map[state.getThanosLoc().x][state.getThanosLoc().y] = new IronManCell(state.getIronManLoc());
 

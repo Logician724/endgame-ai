@@ -39,4 +39,7 @@ public class Node {
 		return depth;
 	}
 
+	public Operator getOperator() {
+		return operator;
+	}
 }
