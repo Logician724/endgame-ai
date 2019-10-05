@@ -13,12 +13,12 @@ import search.State;
 import java.awt.Point;
 
 public class EndGameProblem extends Problem {
-	private Cell[][] map;
+	private Point mapDimensions;
 
 	public EndGameProblem(Point ironManLoc, Point thanosLoc, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc,
-			Cell[][] map) {
+			Point mapDimensions) {
 		super.setInitialState(new EndGameState(ironManLoc, stonesLoc, warriorsLoc, thanosLoc));
-		constructMap((EndGameState) super.getInitialState());
+		this.mapDimensions = mapDimensions;
 	}
 
 	@Override
@@ -45,23 +45,27 @@ public class EndGameProblem extends Problem {
 		return null;
 	}
 
-	public Cell[][] getMap() {
-		return map;
+	public Point getMapDimensions() {
+		return mapDimensions;
 	}
 
-	public void constructMap(EndGameState state) {
+	public Cell[][] constructMap(EndGameState state) {
+		Cell[][] map = new Cell[mapDimensions.x][mapDimensions.y]
+
 		for (int x = 0; x < map.length; x++)
 			for (int y = 0; y < map[x].length; y++)
-				this.map[x][y] = new EmptyCell(new Point(x, y));
+				map[x][y] = new EmptyCell(new Point(x, y));
 
-		this.map[state.getIronManLoc().x][state.getIronManLoc().y] = new IronManCell(state.getIronManLoc());
+		map[state.getIronManLoc().x][state.getIronManLoc().y] = new IronManCell(state.getIronManLoc());
 
 		for (Point stoneLoc : state.getStonesLoc())
-			this.map[stoneLoc.x][stoneLoc.y] = new StoneCell(stoneLoc);
+			map[stoneLoc.x][stoneLoc.y] = new StoneCell(stoneLoc);
 
 		for (Point warriorLoc : state.getWarriorsLoc())
-			this.map[warriorLoc.x][warriorLoc.y] = new StoneCell(warriorLoc);
+			map[warriorLoc.x][warriorLoc.y] = new StoneCell(warriorLoc);
+		
+		map[state.getThanosLoc().x][state.getThanosLoc().y] = new IronManCell(state.getIronManLoc());
 
-		this.map[state.getThanosLoc().x][state.getThanosLoc().y] = new IronManCell(state.getIronManLoc());
+		return map;
 	}
 }
