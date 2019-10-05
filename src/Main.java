@@ -7,15 +7,16 @@ import java.util.ArrayList;
 
 import endgame.EndGameProblem;
 import endgame.EndGameState;
+import operators.*;
 
 public class Main {
+	
+	private static Scanner sc = new Scanner(System.in);
 
 	public static EndGameProblem parse() {
-		Scanner sc = new Scanner(System.in);
 
 		// Reading Line
 		String line = sc.nextLine();
-		sc.close();
 		
 		String[] lineElements = line.split(";");
 
@@ -42,14 +43,12 @@ public class Main {
 		ArrayList<Point> warriorsLoc = new ArrayList<Point>();
 		for (int i = 0; i < elements.length; i += 2)
 			warriorsLoc.add(new Point(Integer.parseInt(elements[i]), Integer.parseInt(elements[i + 1])));
-
-		
 		
 		return new EndGameProblem(ironManLoc, thanosLoc, stonesLoc, warriorsLoc, mapDimensions);
 	}
 	
-	public static void PrintEndGame(EndGameProblem game) {
-		Cell[][] map = game.constructMap(((EndGameState) game.getInitialState()));
+	public static void PrintEndGame(EndGameProblem problem, EndGameState state) {
+		Cell[][] map = problem.constructMap(state);
 		
 		for(int i = 0; i < (map.length * 2); i++)
 			System.out.print("- ");
@@ -57,16 +56,18 @@ public class Main {
 		
 		for(int x = 0; x < map.length; x++) {
 			for(int y = 0; y < map[x].length; y++) {
-				if(map[x][y] instanceof EmptyCell)
-					System.out.print(" " + " | ");
+				char c = ' ';
 				if(map[x][y] instanceof IronManCell)
-					System.out.print("I" + " | ");
+					c = 'I';
+				if(map[x][y] instanceof IronManStoneCell)
+					c = 'X';
 				if(map[x][y] instanceof StoneCell)
-					System.out.print("S" + " | ");
+					c = 'S';
 				if(map[x][y] instanceof ThanosCell)
-					System.out.print("T" + " | ");
+					c = 'T';
 				if(map[x][y] instanceof WarriorCell)
-					System.out.print("W" + " | ");
+					c = 'W';
+				System.out.print(c + " | ");
 			}
 			System.out.println();
 			
@@ -77,9 +78,26 @@ public class Main {
 		}
 	}
 
-	public static void main(String[] args) {
-		EndGameProblem game = parse();
-		PrintEndGame(game);
+	public static void main(String[] args) throws Exception {
+		EndGameProblem problem = parse();
+		EndGameState state = ((EndGameState) problem.getInitialState());
+		PrintEndGame(problem, state);
+		
+		while(sc.hasNext()) {
+			char c = sc.next().charAt(0);
+			switch(c) {
+				case 'u': state = new UpOperator(problem.getMapDimensions()).transition(state); break;
+				case 'd': state = new DownOperator(problem.getMapDimensions()).transition(state); break;
+				case 'l': state = new LeftOperator(problem.getMapDimensions()).transition(state); break;
+				case 'r': state = new RightOperator(problem.getMapDimensions()).transition(state); break;
+				case 'c': state = new CollectOperator().transition(state); break;
+				case 'k': state = new KillOperator(problem.getMapDimensions()).transition(state); break;
+				case 's': state = new SnapOperator().transition(state); break;
+			}
+			PrintEndGame(problem, state);
+		}
+		
+		sc.close();
 	}
 
 }
