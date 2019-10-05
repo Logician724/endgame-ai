@@ -3,8 +3,8 @@ package endgame;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import exceptions.TooMuchDamageException;
 import search.State;
+import exceptions.TooMuchDamageException;
 
 public class EndGameState extends State {
 	private Point ironManLoc;
@@ -51,8 +51,23 @@ public class EndGameState extends State {
 		return isThanosDead;
 	}
 
+	public ArrayList<Point> getStonesLoc() {
+		return stonesLoc;
+	}
+
 	public void killThanos() {
 		this.isThanosDead = true;
+	}
+
+	@Override
+	public boolean equals(Object otherState) {
+		EndGameState targetState = (EndGameState) otherState;
+
+		return this.ironManLoc.equals(targetState.getIronManLoc())
+				&& this.ironManDamage == targetState.getIronManDamage()
+				&& this.stonesLoc.size() != targetState.getStonesLoc().size()
+				&& this.isThanosDead != targetState.isThanosDead();
+
 	}
 
 }

@@ -2,15 +2,19 @@ package endgame;
 
 import java.util.ArrayList;
 
+import cells.Cell;
 import search.Node;
 import search.Operator;
 import search.Problem;
 import search.State;
+import java.awt.Point;
 
 public class EndGameProblem extends Problem {
+	private Cell[][] map;
 
-	public EndGameProblem(EndGameState initialState) {
-		super.setInitialState(initialState);
+	public EndGameProblem(Point ironManLoc, ArrayList<Point> stonesLoc, Cell[][] map) {
+		super.setInitialState(new EndGameState(ironManLoc, stonesLoc));
+		this.map = map;
 	}
 
 	@Override
@@ -38,4 +42,7 @@ public class EndGameProblem extends Problem {
 		return null;
 	}
 
+	public Cell[][] getMap() {
+		return map;
+	}
 }

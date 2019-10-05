@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public abstract class Problem {
 	private State initialState;
+	private Node root;
+	private ArrayList<Node> visitedNodes;
 	private Operator[] operators;
 	private int expandedNodes;
 
@@ -18,9 +20,13 @@ public abstract class Problem {
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
 
 		ArrayList<Node> nodes = new ArrayList<Node>();
-		nodes.add(new Node(initialState));
+		Node root = new Node(initialState);
+		this.root = root;
+		nodes.add(root);
 		while (!nodes.isEmpty()) {
 			Node currentNode = nodes.remove(0);
+			// Add the visited node to the visited nodes array to avoid state repetition
+			visitedNodes.add(currentNode);
 			if (goalTest(currentNode.getState())) {
 				return currentNode;
 			}
