@@ -50,7 +50,7 @@ public class EndGameProblem extends Problem {
 	}
 
 	public Cell[][] constructMap(EndGameState state) {
-		Cell[][] map = new Cell[mapDimensions.x][mapDimensions.y]
+		Cell[][] map = new Cell[mapDimensions.x][mapDimensions.y];
 
 		for (int x = 0; x < map.length; x++)
 			for (int y = 0; y < map[x].length; y++)
@@ -63,7 +63,7 @@ public class EndGameProblem extends Problem {
 
 		for (Point warriorLoc : state.getWarriorsLoc())
 			map[warriorLoc.x][warriorLoc.y] = new StoneCell(warriorLoc);
-		
+
 		map[state.getThanosLoc().x][state.getThanosLoc().y] = new IronManCell(state.getIronManLoc());
 
 		return map;
