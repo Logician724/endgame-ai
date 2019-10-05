@@ -10,7 +10,7 @@ import java.awt.Point;
 public class DownOperator extends Operator implements Transitionable {
 
     public DownOperator(Point mapDimensions) {
-        super(1, mapDimensions);
+        super(mapDimensions);
     }
 
     @Override
@@ -22,7 +22,7 @@ public class DownOperator extends Operator implements Transitionable {
             throw new OutOfMapException();
         }
         Point targetIronManLoc = new Point(currentIronManLoc.x + 1, currentIronManLoc.y);
-        if (OperatorUtils.pointCollidesWithOtherObjectsOnMap(targetIronManLoc, currentState)) {
+        if (OperatorUtils.PointCollidesWithOtherObjectsOnMap(targetIronManLoc, currentState)) {
             throw new CellOccupiedException();
         }
         nextState.setIronManLoc(targetIronManLoc);

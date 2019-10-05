@@ -2,7 +2,6 @@ import java.util.Scanner;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import cells.*;
 import endgame.EndGameProblem;
 
 public class Main {

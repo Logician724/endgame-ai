@@ -17,9 +17,7 @@ public abstract class Problem {
 		this.expandedNodesCount = 0;
 	}
 
-	public abstract State transitionFunction(State currentState, Operator operator);
-
-	public abstract int pathCost(State currentState, State nextState);
+	public abstract int pathCost(Node currentNode, State nextState, Operator operator);
 
 	public abstract boolean goalTest(State currentState);
 

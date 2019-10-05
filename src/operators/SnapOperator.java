@@ -7,10 +7,6 @@ import search.Operator;
 
 public class SnapOperator extends Operator implements Transitionable {
 
-    public SnapOperator() {
-        super(1);
-    }
-
     @Override
     public EndGameState transition(EndGameState currentState) throws OperatorFailedException {
         EndGameState nextState = currentState.clone();

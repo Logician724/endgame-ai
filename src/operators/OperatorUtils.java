@@ -4,7 +4,7 @@ import endgame.EndGameState;
 import java.awt.Point;
 
 public class OperatorUtils {
-    protected static boolean pointCollidesWithOtherObjectsOnMap(Point targetPoint, EndGameState currentState) {
+    protected static boolean PointCollidesWithOtherObjectsOnMap(Point targetPoint, EndGameState currentState) {
         for (Point warriorLoc : currentState.getWarriorsLoc()) {
             if (warriorLoc.equals(targetPoint)) {
                 return true;

@@ -24,15 +24,25 @@ public class EndGameProblem extends Problem {
 	}
 
 	@Override
-	public State transitionFunction(State currentState, Operator operator) {
+	public int pathCost(Node currentNode, State nextState, Operator operator) {
+		int nextStateCost = 0;
+		if (operator instanceof CollectOperator) {
+			nextStateCost += 3;
+		}
 
-		return null;
-	}
+		if (operator instanceof KillOperator) {
+			int currentWarriorCount = EndGameUtils.CountEnemiesAround((EndGameState) currentNode.getState());
+			nextStateCost += currentWarriorCount * 2;
+		}
 
-	@Override
-	public int pathCost(State currentState, State nextState) {
-		// TODO Auto-generated method stub
-		return 0;
+		int nextWarriorCount = EndGameUtils.CountEnemiesAround((EndGameState) nextState);
+		nextStateCost += nextWarriorCount;
+
+		if (EndGameUtils.IsThanosAround((EndGameState) nextState)) {
+			nextStateCost += 5;
+		}
+
+		return currentNode.getCost() + nextStateCost;
 	}
 
 	@Override

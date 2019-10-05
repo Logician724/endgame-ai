@@ -7,12 +7,12 @@ public class Node {
 	private int depth;
 	private Operator operator;
 
-	public Node(State state, Node parent, Operator operator) {
+	public Node(State state, Node parent, Operator operator, int cost) {
 		this.parent = parent;
 		this.state = state;
 		this.operator = operator;
 		this.depth = parent == null ? 0 : parent.depth + 1;
-		this.cost = parent.cost + operator.getCost();
+		this.cost = cost;
 	}
 
 	public Node(State state) {

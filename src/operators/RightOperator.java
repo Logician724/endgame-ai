@@ -11,7 +11,7 @@ import exceptions.OutOfMapException;
 public class RightOperator extends Operator implements Transitionable {
 
     public RightOperator(Point mapDimensions) {
-        super(1, mapDimensions);
+        super(mapDimensions);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class RightOperator extends Operator implements Transitionable {
             throw new OutOfMapException();
         }
         Point targetIronManLoc = new Point(currentIronManLoc.x, currentIronManLoc.y + 1);
-        if (OperatorUtils.pointCollidesWithOtherObjectsOnMap(targetIronManLoc, currentState)) {
+        if (OperatorUtils.PointCollidesWithOtherObjectsOnMap(targetIronManLoc, currentState)) {
             throw new CellOccupiedException();
         }
         nextState.setIronManLoc(targetIronManLoc);

@@ -2,14 +2,12 @@ package operators;
 
 import search.Operator;
 import java.awt.Point;
-import java.util.ArrayList;
-
 import endgame.EndGameState;
 
 public class KillOperator extends Operator implements Transitionable {
 
     public KillOperator(Point mapDimensions) {
-        super(1, mapDimensions);
+        super(mapDimensions);
     }
 
     @Override
@@ -19,24 +17,24 @@ public class KillOperator extends Operator implements Transitionable {
          * Kill all warriors in the east, west, north, and south of iron man if they
          * exist
          */
-        KillWarriorIfExists(nextState.getWarriorsLoc(),
-                new Point(nextState.getIronManLoc().x - 1, nextState.getIronManLoc().y));
-        KillWarriorIfExists(nextState.getWarriorsLoc(),
-                new Point(nextState.getIronManLoc().x + 1, nextState.getIronManLoc().y));
-        KillWarriorIfExists(nextState.getWarriorsLoc(),
-                new Point(nextState.getIronManLoc().x, nextState.getIronManLoc().y - 1));
-        KillWarriorIfExists(nextState.getWarriorsLoc(),
-                new Point(nextState.getIronManLoc().x, nextState.getIronManLoc().y + 1));
+
+        if (currentState.getWarriorsLoc()
+                .contains(new Point(currentState.getIronManLoc().x - 1, currentState.getIronManLoc().y)))
+            nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x - 1, nextState.getIronManLoc().y));
+
+        if (currentState.getWarriorsLoc()
+                .contains(new Point(currentState.getIronManLoc().x + 1, currentState.getIronManLoc().y)))
+            nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x + 1, nextState.getIronManLoc().y));
+
+        if (currentState.getWarriorsLoc()
+                .contains(new Point(currentState.getIronManLoc().x, currentState.getIronManLoc().y - 1)))
+            nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x, nextState.getIronManLoc().y - 1));
+
+        if (currentState.getWarriorsLoc()
+                .contains(new Point(currentState.getIronManLoc().x, currentState.getIronManLoc().y + 1)))
+            nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x, nextState.getIronManLoc().y + 1));
 
         return nextState;
-    }
-
-    private static void KillWarriorIfExists(ArrayList<Point> warriorsLoc, Point targetPoint) {
-        for (Point warriorLoc : warriorsLoc)
-            if (warriorLoc.equals(targetPoint)) {
-                warriorsLoc.remove(warriorLoc);
-                return;
-            }
     }
 
 }
