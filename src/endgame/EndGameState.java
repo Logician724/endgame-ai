@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import search.State;
-import search.Node;
 import exceptions.TooMuchDamageException;
 
 public class EndGameState extends State {
@@ -21,6 +20,12 @@ public class EndGameState extends State {
 		this.stonesLoc = stonesLoc;
 		this.warriorsLoc = warriorsLoc;
 		this.thanosLoc = thanosLoc;
+	}
+
+	private EndGameState(Point ironManLoc, int ironManDamage, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc,
+			Point thanosLoc) {
+		this(ironManLoc, stonesLoc, warriorsLoc, thanosLoc);
+		this.ironManDamage = ironManDamage;
 	}
 
 	public void pickUpStone(Point stoneLoc) {
@@ -84,6 +89,21 @@ public class EndGameState extends State {
 				&& this.warriorsLoc.size() == targetState.getWarriorsLoc().size()
 				&& this.thanosLoc.equals(targetState.getThanosLoc());
 
+	}
+
+	@Override
+	public EndGameState clone() throws NullPointerException {
+		Point newIronManLoc = new Point(ironManLoc.x, ironManLoc.y);
+
+		ArrayList<Point> newStonesLoc = new ArrayList<Point>();
+		this.stonesLoc.forEach((stoneLoc) -> newStonesLoc.add(new Point(stoneLoc.x, stoneLoc.y)));
+
+		ArrayList<Point> newWarriorsLoc = new ArrayList<Point>();
+		this.warriorsLoc.forEach((warriorLoc) -> newWarriorsLoc.add(new Point(warriorLoc.x, warriorLoc.y)));
+
+		Point newThanosLoc = new Point(thanosLoc.x, thanosLoc.y);
+
+		return new EndGameState(newIronManLoc, ironManDamage, newStonesLoc, newWarriorsLoc, newThanosLoc);
 	}
 
 }
