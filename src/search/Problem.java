@@ -37,15 +37,19 @@ public abstract class Problem {
 	}
 
 	public State getInitialState() {
-		return initialState;
+		return this.initialState;
 	}
 
 	public void setInitialState(State initialState) {
 		this.initialState = initialState;
 	}
 
+	public ArrayList<Node> getVisitedNodes() {
+		return this.visitedNodes;
+	}
+
 	public Operator[] getOperators() {
-		return operators;
+		return this.operators;
 	}
 
 	public void setOperators(Operator[] operators) {

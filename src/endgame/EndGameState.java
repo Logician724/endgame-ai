@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 import search.State;
+import search.Node;
 import exceptions.TooMuchDamageException;
 
 public class EndGameState extends State {
@@ -11,13 +12,15 @@ public class EndGameState extends State {
 	private int ironManDamage;
 	private static final int maxDamage = 100;
 	private ArrayList<Point> stonesLoc;
-	private boolean isThanosDead;
+	private ArrayList<Point> warriorsLoc;
+	private Point thanosLoc;
 
-	public EndGameState(Point ironManLoc, ArrayList<Point> stonesLoc) {
+	public EndGameState(Point ironManLoc, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc, Point thanosLoc) {
 		this.ironManLoc = ironManLoc;
 		this.ironManDamage = 0;
 		this.stonesLoc = stonesLoc;
-		this.isThanosDead = false;
+		this.warriorsLoc = warriorsLoc;
+		this.thanosLoc = thanosLoc;
 	}
 
 	public void pickUpStone(Point stoneLoc) {
@@ -43,20 +46,32 @@ public class EndGameState extends State {
 		this.ironManLoc = ironManLoc;
 	}
 
-	public int getIronManDamage() {
-		return ironManDamage;
-	}
-
-	public boolean isThanosDead() {
-		return isThanosDead;
-	}
-
 	public ArrayList<Point> getStonesLoc() {
 		return stonesLoc;
 	}
 
+	public int getIronManDamage() {
+		return ironManDamage;
+	}
+
+	public ArrayList<Point> getWarriorsLoc() {
+		return warriorsLoc;
+	}
+
+	public Point getThanosLoc() {
+		return thanosLoc;
+	}
+
 	public void killThanos() {
-		this.isThanosDead = true;
+		this.thanosLoc = null;
+	}
+
+	public boolean isStateRepeated(ArrayList<Node> visitedNodes) {
+		for (Node currentNode : visitedNodes)
+			if (this.equals(currentNode))
+				return true;
+
+		return false;
 	}
 
 	@Override
@@ -65,8 +80,9 @@ public class EndGameState extends State {
 
 		return this.ironManLoc.equals(targetState.getIronManLoc())
 				&& this.ironManDamage == targetState.getIronManDamage()
-				&& this.stonesLoc.size() != targetState.getStonesLoc().size()
-				&& this.isThanosDead != targetState.isThanosDead();
+				&& this.stonesLoc.size() == targetState.getStonesLoc().size()
+				&& this.warriorsLoc.size() == targetState.getWarriorsLoc().size()
+				&& this.thanosLoc.equals(targetState.getThanosLoc());
 
 	}
 
