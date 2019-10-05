@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class Problem {
 	private State initialState;
 	private Operator[] operators;
+	private int expandedNodes;
 
 	public abstract State transitionFunction(State currentState, Operator operator);
 
@@ -24,6 +25,7 @@ public abstract class Problem {
 				return currentNode;
 			}
 			nodes = strategy.execute(nodes, expand(currentNode));
+			expandedNodes++;
 		}
 		throw new SolutionNotFoundException();
 	}
