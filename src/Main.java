@@ -90,25 +90,24 @@ public class Main {
 			switch (c) {
 			case 'u':
 				problem.getOperators()[0].transition(state);
-				state = new UpOperator(problem.getMapDimensions());
 				break;
 			case 'd':
-				state = new DownOperator(problem.getMapDimensions()).transition(state);
+				problem.getOperators()[1].transition(state);
 				break;
 			case 'l':
-				state = new LeftOperator(problem.getMapDimensions()).transition(state);
+				problem.getOperators()[2].transition(state);
 				break;
 			case 'r':
-				state = new RightOperator(problem.getMapDimensions()).transition(state);
+				problem.getOperators()[3].transition(state);
 				break;
 			case 'c':
-				state = new CollectOperator().transition(state);
+				problem.getOperators()[4].transition(state);
 				break;
 			case 'k':
-				state = new KillOperator(problem.getMapDimensions()).transition(state);
+				problem.getOperators()[5].transition(state);
 				break;
 			case 's':
-				state = new SnapOperator().transition(state);
+				problem.getOperators()[6].transition(state);
 				break;
 			}
 			PrintEndGame(problem, state);
