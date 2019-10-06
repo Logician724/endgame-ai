@@ -7,38 +7,59 @@ import java.util.ArrayList;
 
 import endgame.*;
 import search.*;
+import strategies.*;
 
 public class Main {
 
-	private static Scanner sc = new Scanner(System.in);
+	public static String solve(String grid, String strategy, boolean visualize) {
+		String route = "";
 
-	public static EndGameProblem parse() {
+		EndGameProblem endGameProblem = parse(grid);
+		SearchStrategy searchStrategy = null;
+		switch (strategy) {
+		case "BFS":
+			searchStrategy = new BFS();
+			break;
+		case "DFS":
+			searchStrategy = new DFS();
+			break;
+		default:
+			return "Error 400: Bad Strategy";
+		}
 
-		// Reading Line
-		String line = sc.nextLine();
+		try {
+			Node goalNode = endGameProblem.solveUsingSearch(searchStrategy);
+		} catch (SolutionNotFoundException e) {
+			return "Error 404: Solution Not Found";
+		}
 
-		String[] lineElements = line.split(";");
+		return route;
+
+	}
+
+	public static EndGameProblem parse(String grid) {
+		String[] gridElements = grid.split(";");
 
 		// Constructing Map
-		String[] elements = lineElements[0].split(",");
+		String[] elements = gridElements[0].split(",");
 		Point mapDimensions = new Point(Integer.parseInt(elements[0]), Integer.parseInt(elements[1]));
 
 		// Initiating Iron Man Cell
-		elements = lineElements[1].split(",");
+		elements = gridElements[1].split(",");
 		Point ironManLoc = new Point(Integer.parseInt(elements[0]), Integer.parseInt(elements[1]));
 
 		// Initiating Thanos Cell
-		elements = lineElements[2].split(",");
+		elements = gridElements[2].split(",");
 		Point thanosLoc = new Point(Integer.parseInt(elements[0]), Integer.parseInt(elements[1]));
 
 		// Initiating Stones' Cells
-		elements = lineElements[3].split(",");
+		elements = gridElements[3].split(",");
 		ArrayList<Point> stonesLoc = new ArrayList<Point>();
 		for (int i = 0; i < elements.length; i += 2)
 			stonesLoc.add(new Point(Integer.parseInt(elements[i]), Integer.parseInt(elements[i + 1])));
 
 		// Initiating Warriors' Cells
-		elements = lineElements[4].split(",");
+		elements = gridElements[4].split(",");
 		ArrayList<Point> warriorsLoc = new ArrayList<Point>();
 		for (int i = 0; i < elements.length; i += 2)
 			warriorsLoc.add(new Point(Integer.parseInt(elements[i]), Integer.parseInt(elements[i + 1])));
@@ -80,50 +101,13 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws Exception {
-		EndGameProblem problem = parse();
-		EndGameState state = ((EndGameState) problem.getInitialState());
-		Node node = new Node(state);
-		Operator operator = null;
-		int pathCost = 0;
-		PrintEndGame(problem, state);
 
-		while (sc.hasNext()) {
-			char c = sc.next().charAt(0);
-			switch (c) {
-			case 'u':
-				operator = problem.getOperators()[0];
-				break;
-			case 'd':
-				operator = problem.getOperators()[1];
-				break;
-			case 'l':
-				operator = problem.getOperators()[2];
-				break;
-			case 'r':
-				operator = problem.getOperators()[3];
-				break;
-			case 'c':
-				operator = problem.getOperators()[4];
-				break;
-			case 'k':
-				operator = problem.getOperators()[5];
-				break;
-			case 's':
-				operator = problem.getOperators()[6];
-				break;
-			}
+		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+		String strategy = "BFS";
+		boolean visualize = false;
 
-			state = (EndGameState) operator.transition(state);
-			pathCost = problem.pathCost(node, state, operator);
-			node = new Node(state, node, operator, pathCost);
+		solve(grid, strategy, visualize);
 
-			System.out.println("Enem Arou: " + EndGameUtils.CountEnemiesAround(state));
-			System.out.println("Thanos Ar: " + EndGameUtils.IsThanosAround(state));
-			System.out.println("Path Cost: " + pathCost);
-			PrintEndGame(problem, state);
-		}
-
-		sc.close();
 	}
 
 }

@@ -1,6 +1,6 @@
 package search;
 
-public class Node {
+public class Node implements Comparable {
 	private State state;
 	private Node parent;
 	private int cost;
@@ -41,5 +41,10 @@ public class Node {
 
 	public Operator getOperator() {
 		return operator;
+	}
+
+	@Override
+	public int compareTo(Object otherNode) {
+		return this.cost - ((Node)otherNode).getCost();
 	}
 }
