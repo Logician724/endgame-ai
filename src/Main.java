@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 import cells.*;
 
 import java.awt.Point;
@@ -27,10 +25,25 @@ public class Main {
 			return "Error 400: Bad Strategy";
 		}
 
+		Node node;
 		try {
-			Node goalNode = endGameProblem.solveUsingSearch(searchStrategy);
+			node = endGameProblem.solveUsingSearch(searchStrategy);
 		} catch (SolutionNotFoundException e) {
 			return "Error 404: Solution Not Found";
+		}
+		
+		ArrayList<Node> nodes = new ArrayList<Node>();
+		
+		nodes.add(node);
+		while(node.getParent() != null) {
+			node = node.getParent();
+			nodes.add(node);
+		}
+		
+		while(!nodes.isEmpty()) {
+			node = nodes.remove(nodes.size() - 1);
+			route += (node.getOperator() + " -> " + node + " -> ");
+			route += "\n";
 		}
 
 		return route;
@@ -103,10 +116,10 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "BFS";
+		String strategy = "DFS";
 		boolean visualize = false;
 
-		solve(grid, strategy, visualize);
+		System.out.println(solve(grid, strategy, visualize));
 
 	}
 

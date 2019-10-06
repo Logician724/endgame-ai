@@ -15,7 +15,7 @@ public class DFS extends SearchStrategy {
             Node expandedNode = iterator.previous();
             nodes.add(0, expandedNode);
         }
-        return expandedNodes;
+        return nodes;
     }
 
 }
