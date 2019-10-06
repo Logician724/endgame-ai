@@ -15,6 +15,8 @@ import operators.*;
 public class EndGameProblem extends Problem {
 	private Point mapDimensions;
 
+	private static final int MAX_COST = 100;
+
 	public EndGameProblem(Point ironManLoc, Point thanosLoc, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc,
 			Point mapDimensions) {
 
@@ -67,7 +69,7 @@ public class EndGameProblem extends Problem {
 					continue;
 				}
 				int newStateCost = pathCost(currentNode, newState, currentOperator);
-				if (newStateCost >= 100) {
+				if (newStateCost >= MAX_COST) {
 					continue;
 				}
 				expandedNodes.add(new Node(newState, currentNode, currentOperator, newStateCost));

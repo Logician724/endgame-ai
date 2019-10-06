@@ -31,16 +31,16 @@ public class Main {
 		} catch (SolutionNotFoundException e) {
 			return "Error 404: Solution Not Found";
 		}
-		
+
 		ArrayList<Node> nodes = new ArrayList<Node>();
-		
+
 		nodes.add(node);
-		while(node.getParent() != null) {
+		while (node.getParent() != null) {
 			node = node.getParent();
 			nodes.add(node);
 		}
-		
-		while(!nodes.isEmpty()) {
+
+		while (!nodes.isEmpty()) {
 			node = nodes.remove(nodes.size() - 1);
 			route += (node.getOperator() + " -> " + node + " -> ");
 			route += "\n";
@@ -109,14 +109,13 @@ public class Main {
 			for (int i = 0; i < (map.length * 2); i++)
 				System.out.print("- ");
 
-			System.out.println();
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "DFS";
+		String strategy = "BFS";
 		boolean visualize = false;
 
 		System.out.println(solve(grid, strategy, visualize));
