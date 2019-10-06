@@ -3,6 +3,7 @@ package operators;
 import search.Operator;
 import java.awt.Point;
 import endgame.EndGameState;
+import exceptions.NoEnemiesAroundException;
 import search.State;
 
 public class KillOperator extends Operator {
@@ -12,7 +13,7 @@ public class KillOperator extends Operator {
     }
 
     @Override
-    public EndGameState transition(State currentState) {
+    public EndGameState transition(State currentState) throws NoEnemiesAroundException {
         EndGameState currentEndGameState = (EndGameState) currentState;
         EndGameState nextState = ((EndGameState) currentState).clone();
         /*
@@ -20,21 +21,34 @@ public class KillOperator extends Operator {
          * exist
          */
 
-        if (currentEndGameState.getWarriorsLoc()
-                .contains(new Point(currentEndGameState.getIronManLoc().x - 1, currentEndGameState.getIronManLoc().y)))
+        boolean noEnemiesAround = true;
+
+        if (currentEndGameState.getWarriorsLoc().contains(
+                new Point(currentEndGameState.getIronManLoc().x - 1, currentEndGameState.getIronManLoc().y))) {
             nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x - 1, nextState.getIronManLoc().y));
+            noEnemiesAround = false;
+        }
 
-        if (currentEndGameState.getWarriorsLoc()
-                .contains(new Point(currentEndGameState.getIronManLoc().x + 1, currentEndGameState.getIronManLoc().y)))
+        if (currentEndGameState.getWarriorsLoc().contains(
+                new Point(currentEndGameState.getIronManLoc().x + 1, currentEndGameState.getIronManLoc().y))) {
             nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x + 1, nextState.getIronManLoc().y));
+            noEnemiesAround = false;
+        }
 
-        if (currentEndGameState.getWarriorsLoc()
-                .contains(new Point(currentEndGameState.getIronManLoc().x, currentEndGameState.getIronManLoc().y - 1)))
+        if (currentEndGameState.getWarriorsLoc().contains(
+                new Point(currentEndGameState.getIronManLoc().x, currentEndGameState.getIronManLoc().y - 1))) {
             nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x, nextState.getIronManLoc().y - 1));
+            noEnemiesAround = false;
+        }
 
-        if (currentEndGameState.getWarriorsLoc()
-                .contains(new Point(currentEndGameState.getIronManLoc().x, currentEndGameState.getIronManLoc().y + 1)))
+        if (currentEndGameState.getWarriorsLoc().contains(
+                new Point(currentEndGameState.getIronManLoc().x, currentEndGameState.getIronManLoc().y + 1))) {
             nextState.getWarriorsLoc().remove(new Point(nextState.getIronManLoc().x, nextState.getIronManLoc().y + 1));
+            noEnemiesAround = false;
+        }
+
+        if (noEnemiesAround)
+            throw new NoEnemiesAroundException();
 
         return nextState;
     }

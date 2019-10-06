@@ -64,8 +64,8 @@ public class EndGameState extends State {
 
 		return this.ironManLoc.equals(targetState.getIronManLoc())
 				&& this.getStonesLoc().size() == targetState.getStonesLoc().size()
-				&& ArePointsIdentical(this.getStonesLoc(), targetState.getStonesLoc())
 				&& this.getWarriorsLoc().size() == targetState.getWarriorsLoc().size()
+				&& ArePointsIdentical(this.getStonesLoc(), targetState.getStonesLoc())
 				&& ArePointsIdentical(this.getWarriorsLoc(), targetState.getWarriorsLoc())
 				&& targetState.getThanosLoc() != null && this.getThanosLoc() != null;
 	}
