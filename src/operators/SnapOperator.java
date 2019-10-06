@@ -4,15 +4,15 @@ import endgame.EndGameState;
 import exceptions.CannotSnapException;
 import exceptions.OperatorFailedException;
 import search.Operator;
+import search.State;
 
-public class SnapOperator extends Operator implements Transitionable {
+public class SnapOperator extends Operator {
 
     @Override
-    public EndGameState transition(EndGameState currentState) throws OperatorFailedException {
-        EndGameState nextState = currentState.clone();
+    public EndGameState transition(State currentState) throws OperatorFailedException {
+        EndGameState nextState = ((EndGameState) currentState).clone();
 
-        if (!currentState.getIronManLoc().equals(currentState.getThanosLoc())
-                || currentState.getStonesLoc().size() != 0)
+        if (!nextState.getIronManLoc().equals(nextState.getThanosLoc()) || nextState.getStonesLoc().size() != 0)
             throw new CannotSnapException();
 
         nextState.killThanos();
