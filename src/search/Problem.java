@@ -30,11 +30,11 @@ public abstract class Problem {
 		while (!nodes.isEmpty()) {
 			Node currentNode = nodes.remove(0);
 			// Add the visited node to the visited nodes array to avoid state repetition
-			visitedStates.add(currentNode.getState());
 			if (goalTest(currentNode.getState())) {
 				return currentNode;
 			}
 			nodes = strategy.execute(nodes, expand(currentNode));
+			visitedStates.add(currentNode.getState());
 			expandedNodesCount++;
 		}
 		throw new SolutionNotFoundException();
