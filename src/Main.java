@@ -45,6 +45,20 @@ public class Main {
 			node = nodes.remove(nodes.size() - 1);
 			route += (node.getOperator() + " -> " + node + " -> ");
 			route += "\n";
+			
+			if(visualize) {
+				for (int i = 0; i < (endGameProblem.getMapDimensions().y * 2); i++)
+					System.out.print("= ");
+				System.out.println();
+				
+				System.out.println("Path Cost: " + node.getCost());
+				PrintEndGame(endGameProblem, (EndGameState) node.getState());
+				
+				for (int i = 0; i < (endGameProblem.getMapDimensions().y * 2); i++)
+					System.out.print("= ");
+				System.out.println();
+				System.out.println();
+			}
 		}
 
 		return route;
@@ -109,15 +123,17 @@ public class Main {
 
 			for (int i = 0; i < (map.length * 2); i++)
 				System.out.print("- ");
+			
+			System.out.println();
 
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
 
-		String grid = "5,15;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "BFS";
-		boolean visualize = false;
+		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+		String strategy = "DFS";
+		boolean visualize = true;
 
 		long startTime = System.nanoTime();
 
