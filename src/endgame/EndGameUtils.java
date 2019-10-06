@@ -2,6 +2,8 @@ package endgame;
 
 import java.awt.Point;
 
+import exceptions.ThanosDoesNotExistException;
+
 public class EndGameUtils {
 
     public static int CountEnemiesAround(EndGameState state) {
@@ -19,8 +21,12 @@ public class EndGameUtils {
         return enemiesCount;
     }
 
-    public static boolean IsThanosAround(EndGameState state) {
-
+    public static boolean IsThanosAround(EndGameState state) throws ThanosDoesNotExistException {
+        if (state.getThanosLoc() == null) {
+            throw new ThanosDoesNotExistException();
+        }
+        if (state.getThanosLoc().equals(new Point(state.getIronManLoc().x, state.getIronManLoc().y)))
+            return true;
         if (state.getThanosLoc().equals(new Point(state.getIronManLoc().x - 1, state.getIronManLoc().y)))
             return true;
         if (state.getThanosLoc().equals(new Point(state.getIronManLoc().x + 1, state.getIronManLoc().y)))

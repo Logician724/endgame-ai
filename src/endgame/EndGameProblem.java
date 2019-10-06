@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import cells.*;
 import exceptions.OperatorFailedException;
+import exceptions.ThanosDoesNotExistException;
 import search.Node;
 import search.Operator;
 import search.Problem;
@@ -39,8 +40,12 @@ public class EndGameProblem extends Problem {
 		int nextWarriorCount = EndGameUtils.CountEnemiesAround((EndGameState) nextState);
 		nextStateCost += nextWarriorCount;
 
-		if (EndGameUtils.IsThanosAround((EndGameState) nextState)) {
-			nextStateCost += 5;
+		try {
+			if (EndGameUtils.IsThanosAround((EndGameState) nextState)) {
+				nextStateCost += 5;
+			}
+		} catch (ThanosDoesNotExistException e) {
+			nextStateCost = 0;
 		}
 
 		return currentNode.getCost() + nextStateCost;
