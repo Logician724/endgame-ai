@@ -51,7 +51,7 @@ public class EndGameState extends State {
 		this.thanosLoc = null;
 	}
 
-	public boolean isRepeated(HashSet<EndGameState> visitedStates) {
+	public boolean isRepeated(HashSet<State> visitedStates) {
 		return visitedStates.contains(this);
 	}
 
