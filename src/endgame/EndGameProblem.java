@@ -67,15 +67,18 @@ public class EndGameProblem extends Problem {
 			for (int y = 0; y < map[x].length; y++)
 				map[x][y] = new EmptyCell(new Point(x, y));
 
-		map[state.getIronManLoc().x][state.getIronManLoc().y] = new IronManCell(state.getIronManLoc());
-
 		for (Point stoneLoc : state.getStonesLoc())
 			map[stoneLoc.x][stoneLoc.y] = new StoneCell(stoneLoc);
 
 		for (Point warriorLoc : state.getWarriorsLoc())
 			map[warriorLoc.x][warriorLoc.y] = new WarriorCell(warriorLoc);
+		
+		if(map[state.getIronManLoc().x][state.getIronManLoc().y] instanceof StoneCell)
+			map[state.getIronManLoc().x][state.getIronManLoc().y] = new IronManStoneCell(state.getIronManLoc());
+		else
+			map[state.getIronManLoc().x][state.getIronManLoc().y] = new IronManCell(state.getIronManLoc());
 
-		map[state.getThanosLoc().x][state.getThanosLoc().y] = new IronManCell(state.getIronManLoc());
+		map[state.getThanosLoc().x][state.getThanosLoc().y] = new ThanosCell(state.getIronManLoc());
 
 		return map;
 	}
