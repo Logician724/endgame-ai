@@ -2,16 +2,17 @@ package endgame;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import search.State;
 
 public class EndGameState extends State {
 	private Point ironManLoc;
-	private ArrayList<Point> stonesLoc;
-	private ArrayList<Point> warriorsLoc;
+	private HashSet<Point> stonesLoc;
+	private HashSet<Point> warriorsLoc;
 	private Point thanosLoc;
 
-	public EndGameState(Point ironManLoc, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc, Point thanosLoc) {
+	public EndGameState(Point ironManLoc, HashSet<Point> stonesLoc, HashSet<Point> warriorsLoc, Point thanosLoc) {
 		this.ironManLoc = ironManLoc;
 		this.stonesLoc = stonesLoc;
 		this.warriorsLoc = warriorsLoc;
@@ -34,11 +35,11 @@ public class EndGameState extends State {
 		this.ironManLoc = ironManLoc;
 	}
 
-	public ArrayList<Point> getStonesLoc() {
+	public HashSet<Point> getStonesLoc() {
 		return stonesLoc;
 	}
 
-	public ArrayList<Point> getWarriorsLoc() {
+	public HashSet<Point> getWarriorsLoc() {
 		return warriorsLoc;
 	}
 
@@ -70,7 +71,7 @@ public class EndGameState extends State {
 				&& targetState.getThanosLoc() != null && this.getThanosLoc() != null;
 	}
 
-	private static boolean ArePointsIdentical(ArrayList<Point> currentPoints, ArrayList<Point> targetPoints) {
+	private static boolean ArePointsIdentical(HashSet<Point> currentPoints, HashSet<Point> targetPoints) {
 		for (Point currentPoint : currentPoints) {
 			if (!targetPoints.contains(currentPoint)) {
 				return false;
@@ -80,14 +81,13 @@ public class EndGameState extends State {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public EndGameState clone() throws NullPointerException {
 		Point newIronManLoc = new Point(ironManLoc.x, ironManLoc.y);
 
-		ArrayList<Point> newStonesLoc = new ArrayList<Point>();
-		this.stonesLoc.forEach((stoneLoc) -> newStonesLoc.add(new Point(stoneLoc.x, stoneLoc.y)));
+		HashSet<Point> newStonesLoc = (HashSet<Point>) this.stonesLoc.clone();
 
-		ArrayList<Point> newWarriorsLoc = new ArrayList<Point>();
-		this.warriorsLoc.forEach((warriorLoc) -> newWarriorsLoc.add(new Point(warriorLoc.x, warriorLoc.y)));
+		HashSet<Point> newWarriorsLoc = (HashSet<Point>) this.warriorsLoc.clone();
 
 		Point newThanosLoc = new Point(thanosLoc.x, thanosLoc.y);
 

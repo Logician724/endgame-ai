@@ -1,6 +1,7 @@
 package endgame;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import cells.*;
 import exceptions.OperatorFailedException;
@@ -17,7 +18,7 @@ public class EndGameProblem extends Problem {
 
 	private static final int MAX_COST = 100;
 
-	public EndGameProblem(Point ironManLoc, Point thanosLoc, ArrayList<Point> stonesLoc, ArrayList<Point> warriorsLoc,
+	public EndGameProblem(Point ironManLoc, Point thanosLoc, HashSet<Point> stonesLoc, HashSet<Point> warriorsLoc,
 			Point mapDimensions) {
 
 		super(new EndGameState(ironManLoc, stonesLoc, warriorsLoc, thanosLoc),

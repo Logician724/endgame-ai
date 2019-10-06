@@ -2,6 +2,7 @@ import cells.*;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import endgame.*;
 import search.*;
@@ -67,13 +68,13 @@ public class Main {
 
 		// Initiating Stones' Cells
 		elements = gridElements[3].split(",");
-		ArrayList<Point> stonesLoc = new ArrayList<Point>();
+		HashSet<Point> stonesLoc = new HashSet<Point>();
 		for (int i = 0; i < elements.length; i += 2)
 			stonesLoc.add(new Point(Integer.parseInt(elements[i]), Integer.parseInt(elements[i + 1])));
 
 		// Initiating Warriors' Cells
 		elements = gridElements[4].split(",");
-		ArrayList<Point> warriorsLoc = new ArrayList<Point>();
+		HashSet<Point> warriorsLoc = new HashSet<Point>();
 		for (int i = 0; i < elements.length; i += 2)
 			warriorsLoc.add(new Point(Integer.parseInt(elements[i]), Integer.parseInt(elements[i + 1])));
 
@@ -118,7 +119,13 @@ public class Main {
 		String strategy = "BFS";
 		boolean visualize = false;
 
+		long startTime = System.nanoTime();
+
 		System.out.println(solve(grid, strategy, visualize));
+
+		long endTime = System.nanoTime();
+		long timeElapsed = (endTime - startTime) / 1000000;
+		System.out.println("Time: " + timeElapsed + "s");
 
 	}
 
