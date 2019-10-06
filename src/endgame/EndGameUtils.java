@@ -27,7 +27,7 @@ public class EndGameUtils {
             return true;
         if (state.getThanosLoc().equals(new Point(state.getIronManLoc().x, state.getIronManLoc().y - 1)))
             return true;
-        if (state.getWarriorsLoc().contains(new Point(state.getIronManLoc().x, state.getIronManLoc().y + 1)))
+        if (state.getThanosLoc().equals(new Point(state.getIronManLoc().x, state.getIronManLoc().y + 1)))
             return true;
 
         return false;

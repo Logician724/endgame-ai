@@ -5,9 +5,7 @@ import cells.*;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import endgame.EndGameProblem;
-import endgame.EndGameState;
-import operators.*;
+import endgame.*;
 import search.*;
 
 public class Main {
@@ -119,6 +117,8 @@ public class Main {
 			pathCost = problem.pathCost(node, state, operator);
 			node = new Node(state, node, operator, pathCost);
 
+			System.out.println("Enem Arou: " + EndGameUtils.CountEnemiesAround(state));
+			System.out.println("Thanos Ar: " + EndGameUtils.IsThanosAround(state));
 			System.out.println("Path Cost: " + pathCost);
 			PrintEndGame(problem, state);
 		}
