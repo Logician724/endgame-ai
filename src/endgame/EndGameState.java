@@ -51,12 +51,8 @@ public class EndGameState extends State {
 		this.thanosLoc = null;
 	}
 
-	public boolean isRepeated(ArrayList<State> visitedStates) {
-		for (State currentState : visitedStates)
-			if (this.equals(currentState))
-				return true;
-
-		return false;
+	public boolean isRepeated(HashSet<EndGameState> visitedStates) {
+		return visitedStates.contains(this);
 	}
 
 	@Override

@@ -116,7 +116,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "BFS";
+		String strategy = "DFS";
 		boolean visualize = false;
 
 		long startTime = System.nanoTime();
@@ -125,7 +125,7 @@ public class Main {
 
 		long endTime = System.nanoTime();
 		long timeElapsed = (endTime - startTime) / 1000000;
-		System.out.println("Time: " + timeElapsed + "s");
+		System.out.println("Time: " + timeElapsed + "ms");
 
 	}
 
