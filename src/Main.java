@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import endgame.EndGameProblem;
 import endgame.EndGameState;
 import operators.*;
+import search.*;
 
 public class Main {
 
@@ -83,33 +84,42 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		EndGameProblem problem = parse();
 		EndGameState state = ((EndGameState) problem.getInitialState());
+		Node node = new Node(state);
+		Operator operator = null;
+		int pathCost = 0;
 		PrintEndGame(problem, state);
 
 		while (sc.hasNext()) {
 			char c = sc.next().charAt(0);
 			switch (c) {
 			case 'u':
-				problem.getOperators()[0].transition(state);
+				operator = problem.getOperators()[0];
 				break;
 			case 'd':
-				problem.getOperators()[1].transition(state);
+				operator = problem.getOperators()[1];
 				break;
 			case 'l':
-				problem.getOperators()[2].transition(state);
+				operator = problem.getOperators()[2];
 				break;
 			case 'r':
-				problem.getOperators()[3].transition(state);
+				operator = problem.getOperators()[3];
 				break;
 			case 'c':
-				problem.getOperators()[4].transition(state);
+				operator = problem.getOperators()[4];
 				break;
 			case 'k':
-				problem.getOperators()[5].transition(state);
+				operator = problem.getOperators()[5];
 				break;
 			case 's':
-				problem.getOperators()[6].transition(state);
+				operator = problem.getOperators()[6];
 				break;
 			}
+
+			state = (EndGameState) operator.transition(state);
+			pathCost = problem.pathCost(node, state, operator);
+			node = new Node(state, node, operator, pathCost);
+
+			System.out.println("Path Cost: " + pathCost);
 			PrintEndGame(problem, state);
 		}
 
