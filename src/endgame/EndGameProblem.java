@@ -3,6 +3,7 @@ package endgame;
 import java.util.ArrayList;
 
 import cells.*;
+import exceptions.OperatorFailedException;
 import search.Node;
 import search.Operator;
 import search.Problem;
@@ -52,8 +53,22 @@ public class EndGameProblem extends Problem {
 
 	@Override
 	public ArrayList<Node> expand(Node currentNode) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Node> expandedNodes = new ArrayList<Node>();
+
+		for (Operator currentOperator : getOperators()) {
+			try {
+				EndGameState newState = (EndGameState) currentOperator.transition(currentNode.getState());
+				int newStateCost = pathCost(currentNode, newState, currentOperator);
+				if (newStateCost >= 100) {
+					continue;
+				}
+				expandedNodes.add(new Node(newState, currentNode, currentOperator, newStateCost));
+			} catch (OperatorFailedException e) {
+				continue;
+			}
+		}
+
+		return expandedNodes;
 	}
 
 	public Point getMapDimensions() {
