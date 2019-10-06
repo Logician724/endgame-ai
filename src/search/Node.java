@@ -1,6 +1,6 @@
 package search;
 
-public class Node implements Comparable {
+public class Node implements Comparable<Node> {
 	private State state;
 	private Node parent;
 	private int cost;
@@ -44,7 +44,7 @@ public class Node implements Comparable {
 	}
 
 	@Override
-	public int compareTo(Object otherNode) {
-		return this.cost - ((Node)otherNode).getCost();
+	public int compareTo(Node otherNode) {
+		return this.cost - otherNode.getCost();
 	}
 }

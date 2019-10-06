@@ -1,7 +1,6 @@
 package endgame;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import search.State;
@@ -95,15 +94,6 @@ public class EndGameState extends State {
 				return false;
 		} else if (!warriorsLoc.equals(other.warriorsLoc))
 			return false;
-		return true;
-	}
-
-	private static boolean ArePointsIdentical(HashSet<Point> currentPoints, HashSet<Point> targetPoints) {
-		for (Point currentPoint : currentPoints) {
-			if (!targetPoints.contains(currentPoint)) {
-				return false;
-			}
-		}
 		return true;
 	}
 

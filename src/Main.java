@@ -22,8 +22,11 @@ public class Main {
 		case "DFS":
 			searchStrategy = new DFS();
 			break;
+		case "UCS":
+			searchStrategy = new UCS();
+			break;
 		default:
-			return "Error 400: Bad Strategy";
+			throw new IllegalArgumentException("Could not recognize the passed strategy");
 		}
 
 		Node node;
@@ -116,7 +119,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,15;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "BFS";
+		String strategy = "UCS";
 		boolean visualize = false;
 
 		long startTime = System.nanoTime();
