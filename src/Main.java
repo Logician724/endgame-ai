@@ -115,8 +115,8 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "DFS";
+		String grid = "5,15;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+		String strategy = "BFS";
 		boolean visualize = false;
 
 		long startTime = System.nanoTime();

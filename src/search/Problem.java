@@ -3,17 +3,19 @@ package search;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import endgame.EndGameState;
+
 public abstract class Problem {
 	private State initialState;
 	private Node root;
-	private HashSet<State> visitedStates;
+	private HashSet<EndGameState> visitedStates;
 	private Operator[] operators;
 	private int expandedNodesCount;
 
 	public Problem(State initialState, Operator[] operators) {
 		this.initialState = initialState;
 		this.root = new Node(initialState);
-		this.visitedStates = new HashSet<State>();
+		this.visitedStates = new HashSet<EndGameState>();
 		this.operators = operators;
 		this.expandedNodesCount = 0;
 	}
@@ -35,7 +37,7 @@ public abstract class Problem {
 				return currentNode;
 			}
 			nodes = strategy.execute(nodes, expand(currentNode));
-			visitedStates.add(currentNode.getState());
+			visitedStates.add((EndGameState) currentNode.getState());
 			expandedNodesCount++;
 		}
 		throw new SolutionNotFoundException();
@@ -45,7 +47,7 @@ public abstract class Problem {
 		return initialState;
 	}
 
-	public HashSet<State> getVisitedStates() {
+	public HashSet<EndGameState> getVisitedStates() {
 		return visitedStates;
 	}
 

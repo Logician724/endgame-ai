@@ -51,20 +51,51 @@ public class EndGameState extends State {
 		this.thanosLoc = null;
 	}
 
-	public boolean isRepeated(HashSet<State> visitedStates) {
+	public boolean isRepeated(HashSet<EndGameState> visitedStates) {
 		return visitedStates.contains(this);
 	}
 
 	@Override
-	public boolean equals(Object otherState) {
-		EndGameState targetState = (EndGameState) otherState;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ironManLoc == null) ? 0 : ironManLoc.hashCode());
+		result = prime * result + ((stonesLoc == null) ? 0 : stonesLoc.hashCode());
+		result = prime * result + ((thanosLoc == null) ? 0 : thanosLoc.hashCode());
+		result = prime * result + ((warriorsLoc == null) ? 0 : warriorsLoc.hashCode());
+		return result;
+	}
 
-		return this.ironManLoc.equals(targetState.getIronManLoc())
-				&& this.getStonesLoc().size() == targetState.getStonesLoc().size()
-				&& this.getWarriorsLoc().size() == targetState.getWarriorsLoc().size()
-				&& ArePointsIdentical(this.getStonesLoc(), targetState.getStonesLoc())
-				&& ArePointsIdentical(this.getWarriorsLoc(), targetState.getWarriorsLoc())
-				&& targetState.getThanosLoc() != null && this.getThanosLoc() != null;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EndGameState other = (EndGameState) obj;
+		if (ironManLoc == null) {
+			if (other.ironManLoc != null)
+				return false;
+		} else if (!ironManLoc.equals(other.ironManLoc))
+			return false;
+		if (stonesLoc == null) {
+			if (other.stonesLoc != null)
+				return false;
+		} else if (!stonesLoc.equals(other.stonesLoc))
+			return false;
+		if (thanosLoc == null) {
+			if (other.thanosLoc != null)
+				return false;
+		} else if (!thanosLoc.equals(other.thanosLoc))
+			return false;
+		if (warriorsLoc == null) {
+			if (other.warriorsLoc != null)
+				return false;
+		} else if (!warriorsLoc.equals(other.warriorsLoc))
+			return false;
+		return true;
 	}
 
 	private static boolean ArePointsIdentical(HashSet<Point> currentPoints, HashSet<Point> targetPoints) {
