@@ -11,7 +11,7 @@ public class OperatorUtils {
             }
         }
 
-        if (targetPoint.equals(currentState.getThanosLoc()) && currentState.getStonesLoc().size() == 0) {
+        if (targetPoint.equals(currentState.getThanosLoc()) && currentState.getStonesLoc().size() != 0) {
             return true;
         }
 

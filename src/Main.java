@@ -89,9 +89,9 @@ public class Main {
 			char c = sc.next().charAt(0);
 			switch (c) {
 			case 'u':
-				state = new UpOperator(problem.getMapDimensions()).transition(state);
+				problem.getOperators()[0].transition(state);
+				state = new UpOperator(problem.getMapDimensions());
 				break;
-
 			case 'd':
 				state = new DownOperator(problem.getMapDimensions()).transition(state);
 				break;
