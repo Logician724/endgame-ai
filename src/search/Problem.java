@@ -35,12 +35,18 @@ public abstract class Problem {
 			if (goalTest(currentNode.getState())) {
 				return currentNode;
 			}
-			nodes = strategy.execute(nodes, expand(currentNode));
 			// Add the visited node to the visited nodes hashset to avoid state repetition
 			visitedStates.add((EndGameState) currentNode.getState());
+			nodes = strategy.execute(nodes, expand(currentNode));
 			expandedNodesCount++;
 		}
 		throw new SolutionNotFoundException();
+	}
+
+	public void reset() {
+		visitedStates.clear();
+		expandedNodesCount = -1;
+		nodes.clear();
 	}
 
 	public State getInitialState() {
@@ -53,10 +59,6 @@ public abstract class Problem {
 
 	public Operator[] getOperators() {
 		return operators;
-	}
-
-	public void setOperators(Operator[] operators) {
-		this.operators = operators;
 	}
 
 	public Node getRoot() {
