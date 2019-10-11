@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import endgame.*;
+import heuristics.*;
 import search.*;
 import strategies.*;
 
@@ -28,6 +29,18 @@ public class Main {
 			break;
 		case "IDS":
 			searchStrategy = new IDS(endGameProblem);
+			break;
+		case "GRS1":
+			searchStrategy = new GRS(endGameProblem, new StonesHeuristic());
+			break;
+		case "GRS2":
+			searchStrategy = new GRS(endGameProblem, new StonesThanosHeuristic());
+			break;
+		case "ASS1":
+			searchStrategy = new ASS(endGameProblem, new StonesHeuristic());
+			break;
+		case "ASS2":
+			searchStrategy = new ASS(endGameProblem, new StonesThanosHeuristic());
 			break;
 		default:
 			throw new IllegalArgumentException("Could not recognize the passed strategy");
