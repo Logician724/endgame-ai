@@ -1,7 +1,8 @@
 package search;
 
-import java.util.ArrayList;
+import java.util.Queue;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 import endgame.EndGameState;
 
@@ -11,6 +12,7 @@ public abstract class Problem {
 	private HashSet<EndGameState> visitedStates;
 	private Operator[] operators;
 	private int expandedNodesCount;
+	private Queue<Node> nodes;
 
 	public Problem(State initialState, Operator[] operators) {
 		this.initialState = initialState;
@@ -24,19 +26,17 @@ public abstract class Problem {
 
 	public abstract boolean goalTest(State currentState);
 
-	public abstract ArrayList<Node> expand(Node currentNode);
+	public abstract LinkedList<Node> expand(Node currentNode);
 
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
-
-		ArrayList<Node> nodes = new ArrayList<Node>();
 		nodes.add(root);
 		while (!nodes.isEmpty()) {
-			Node currentNode = nodes.remove(0);
-			// Add the visited node to the visited nodes array to avoid state repetition
+			Node currentNode = nodes.poll();
 			if (goalTest(currentNode.getState())) {
 				return currentNode;
 			}
 			nodes = strategy.execute(nodes, expand(currentNode));
+			// Add the visited node to the visited nodes hashset to avoid state repetition
 			visitedStates.add((EndGameState) currentNode.getState());
 			expandedNodesCount++;
 		}
@@ -65,6 +65,14 @@ public abstract class Problem {
 
 	public int getExpandedNodesCount() {
 		return expandedNodesCount;
+	}
+
+	public Queue<Node> getNodes() {
+		return nodes;
+	}
+
+	public void setNodes(Queue<Node> nodes) {
+		this.nodes = nodes;
 	}
 
 }

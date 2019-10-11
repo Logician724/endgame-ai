@@ -2,6 +2,8 @@ package endgame;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import cells.*;
 import exceptions.OperatorFailedException;
@@ -22,9 +24,9 @@ public class EndGameProblem extends Problem {
 			Point mapDimensions) {
 
 		super(new EndGameState(ironManLoc, stonesLoc, warriorsLoc, thanosLoc),
-				new Operator[] { new UpOperator(mapDimensions), new DownOperator(mapDimensions),
-						new LeftOperator(mapDimensions), new RightOperator(mapDimensions), new CollectOperator(),
-						new KillOperator(mapDimensions), new SnapOperator() });
+				new Operator[] { new CollectOperator(), new SnapOperator(), new UpOperator(mapDimensions),
+						new DownOperator(mapDimensions), new LeftOperator(mapDimensions),
+						new RightOperator(mapDimensions), new KillOperator(mapDimensions) });
 		this.mapDimensions = mapDimensions;
 	}
 
@@ -60,8 +62,8 @@ public class EndGameProblem extends Problem {
 	}
 
 	@Override
-	public ArrayList<Node> expand(Node currentNode) {
-		ArrayList<Node> expandedNodes = new ArrayList<Node>();
+	public LinkedList<Node> expand(Node currentNode) {
+		LinkedList<Node> expandedNodes = new LinkedList<Node>();
 
 		for (Operator currentOperator : getOperators()) {
 			try {
@@ -99,7 +101,7 @@ public class EndGameProblem extends Problem {
 		for (Point warriorLoc : state.getWarriorsLoc())
 			map[warriorLoc.x][warriorLoc.y] = new WarriorCell(warriorLoc);
 
-		if(state.getThanosLoc() != null)
+		if (state.getThanosLoc() != null)
 			map[state.getThanosLoc().x][state.getThanosLoc().y] = new ThanosCell(state.getIronManLoc());
 
 		if (map[state.getIronManLoc().x][state.getIronManLoc().y] instanceof StoneCell)

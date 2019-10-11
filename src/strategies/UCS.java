@@ -1,31 +1,22 @@
 package strategies;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
+import endgame.EndGameProblem;
 import search.Node;
 import search.SearchStrategy;
 
 public class UCS extends SearchStrategy {
+    public UCS(EndGameProblem problem) {
+        problem.setNodes(new PriorityQueue<Node>());
+    }
 
     @Override
-    public ArrayList<Node> execute(ArrayList<Node> nodes, ArrayList<Node> expandedNodes) {
-        Iterator<Node> iterator = expandedNodes.iterator();
-        while (iterator.hasNext()) {
-            Node expandedNode = iterator.next();
-            if (nodes.isEmpty()) {
-                nodes.add(expandedNode);
-            } else {
-                // If there are items in the nodes list insert the expanded nodes in order
-                for (int i = 0; i < nodes.size(); i++) {
-                    if (nodes.get(i).compareTo(expandedNode) > 0) {
-                        nodes.add(i, expandedNode);
-                        break;
-                    }
-                    nodes.add(expandedNode);
-                }
-            }
-        }
+    public Queue<Node> execute(Queue<Node> nodes, LinkedList<Node> expandedNodes) {
+        expandedNodes.forEach((expandedNode) -> nodes.add(expandedNode));
         return nodes;
     }
 

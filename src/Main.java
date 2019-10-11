@@ -1,6 +1,7 @@
 import cells.*;
 
 import java.awt.Point;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -17,13 +18,16 @@ public class Main {
 		SearchStrategy searchStrategy = null;
 		switch (strategy) {
 		case "BFS":
-			searchStrategy = new BFS();
+			searchStrategy = new BFS(endGameProblem);
 			break;
 		case "DFS":
-			searchStrategy = new DFS();
+			searchStrategy = new DFS(endGameProblem);
 			break;
 		case "UCS":
-			searchStrategy = new UCS();
+			searchStrategy = new UCS(endGameProblem);
+			break;
+		case "IDS":
+			searchStrategy = new IDS(endGameProblem);
 			break;
 		default:
 			throw new IllegalArgumentException("Could not recognize the passed strategy");
@@ -134,10 +138,9 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 
-		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "UCS";
-		boolean visualize = true;
-
+		String grid = "15,15;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
+		String strategy = "BFS";
+		boolean visualize = false;
 		long startTime = System.nanoTime();
 
 		System.out.println(solve(grid, strategy, visualize));
