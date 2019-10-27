@@ -18,28 +18,28 @@ public class Main {
 		EndGameProblem endGameProblem = parse(grid);
 		SearchStrategy searchStrategy = null;
 		switch (strategy) {
-		case "BFS":
+		case "BF":
 			searchStrategy = new BFS(endGameProblem);
 			break;
-		case "DFS":
+		case "DF":
 			searchStrategy = new DFS(endGameProblem);
 			break;
-		case "UCS":
+		case "UC":
 			searchStrategy = new UCS(endGameProblem);
 			break;
-		case "IDS":
+		case "ID":
 			searchStrategy = new IDS(endGameProblem);
 			break;
-		case "GRS1":
+		case "GR1":
 			searchStrategy = new GRS(endGameProblem, new StonesHeuristic());
 			break;
-		case "GRS2":
+		case "GR2":
 			searchStrategy = new GRS(endGameProblem, new StonesThanosHeuristic());
 			break;
-		case "ASS1":
+		case "AS1":
 			searchStrategy = new ASS(endGameProblem, new StonesHeuristic());
 			break;
-		case "ASS2":
+		case "AS2":
 			searchStrategy = new ASS(endGameProblem, new StonesThanosHeuristic());
 			break;
 		default:
@@ -167,7 +167,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "IDS";
+		String strategy = "ID";
 		boolean visualize = false;
 		long startTime = System.nanoTime();
 
