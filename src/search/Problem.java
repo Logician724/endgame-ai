@@ -4,12 +4,10 @@ import java.util.Queue;
 import java.util.HashSet;
 import java.util.LinkedList;
 
-import endgame.EndGameState;
-
 public abstract class Problem {
 	private State initialState;
 	private Node root;
-	private HashSet<EndGameState> visitedStates;
+	private HashSet<State> visitedStates;
 	private Operator[] operators;
 	private int expandedNodesCount;
 	private Queue<Node> nodes;
@@ -17,7 +15,7 @@ public abstract class Problem {
 	public Problem(State initialState, Operator[] operators) {
 		this.initialState = initialState;
 		this.root = new Node(initialState);
-		this.visitedStates = new HashSet<EndGameState>();
+		this.visitedStates = new HashSet<State>();
 		this.operators = operators;
 		this.expandedNodesCount = 0;
 	}
@@ -36,7 +34,7 @@ public abstract class Problem {
 				return currentNode;
 			}
 			// Add the visited node to the visited nodes hashset to avoid state repetition
-			visitedStates.add((EndGameState) currentNode.getState());
+			visitedStates.add((State) currentNode.getState());
 			nodes = strategy.execute(nodes, expand(currentNode));
 			expandedNodesCount++;
 		}
@@ -53,7 +51,7 @@ public abstract class Problem {
 		return initialState;
 	}
 
-	public HashSet<EndGameState> getVisitedStates() {
+	public HashSet<State> getVisitedStates() {
 		return visitedStates;
 	}
 
