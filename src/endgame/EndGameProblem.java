@@ -68,6 +68,9 @@ public class EndGameProblem extends Problem {
 		for (Operator currentOperator : getOperators()) {
 			try {
 				EndGameState newState = (EndGameState) currentOperator.transition(currentNode.getState());
+				if (newState == null) {
+					continue;
+				}
 				if (newState.isRepeated(this.getVisitedStates())) {
 					continue;
 				}

@@ -18,14 +18,6 @@ public class EndGameState extends State {
 		this.thanosLoc = thanosLoc;
 	}
 
-	public void pickUpStone(Point stoneLoc) {
-		for (Point currentLoc : stonesLoc) {
-			if (currentLoc.equals(stoneLoc)) {
-				stonesLoc.remove(currentLoc);
-			}
-		}
-	}
-
 	public Point getIronManLoc() {
 		return ironManLoc;
 	}

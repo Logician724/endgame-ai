@@ -55,7 +55,6 @@ public class Main {
 
 		ArrayList<Node> nodes = new ArrayList<Node>();
 
-		System.out.println(node.getDepth());
 		nodes.add(node);
 		while (node.getParent() != null) {
 			node = node.getParent();
@@ -64,22 +63,21 @@ public class Main {
 
 		while (!nodes.isEmpty()) {
 			node = nodes.remove(nodes.size() - 1);
-			
-			if(node.getOperator() instanceof UpOperator)
+
+			if (node.getOperator() instanceof UpOperator)
 				route += "up,";
-			if(node.getOperator() instanceof DownOperator)
+			if (node.getOperator() instanceof DownOperator)
 				route += "down,";
-			if(node.getOperator() instanceof LeftOperator)
+			if (node.getOperator() instanceof LeftOperator)
 				route += "left,";
-			if(node.getOperator() instanceof RightOperator)
+			if (node.getOperator() instanceof RightOperator)
 				route += "right,";
-			if(node.getOperator() instanceof CollectOperator)
+			if (node.getOperator() instanceof CollectOperator)
 				route += "collect,";
-			if(node.getOperator() instanceof KillOperator)
+			if (node.getOperator() instanceof KillOperator)
 				route += "kill,";
-			if(node.getOperator() instanceof SnapOperator)
-				route += "snap.";
-			
+			if (node.getOperator() instanceof SnapOperator)
+				route += "snap";
 
 			if (visualize) {
 				for (int i = 0; i < (endGameProblem.getMapDimensions().y * 2); i++)
@@ -95,7 +93,7 @@ public class Main {
 				System.out.println();
 			}
 		}
-		
+
 		return route;
 
 	}
@@ -167,7 +165,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "ID";
+		String strategy = "BF";
 		boolean visualize = false;
 		long startTime = System.nanoTime();
 

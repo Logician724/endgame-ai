@@ -7,13 +7,14 @@ import exceptions.NoEnemiesAroundException;
 import search.State;
 
 public class KillOperator extends Operator {
+    private Point mapDimensions;
 
     public KillOperator(Point mapDimensions) {
-        super(mapDimensions);
+        this.mapDimensions = mapDimensions;
     }
 
     @Override
-    public EndGameState transition(State currentState) throws NoEnemiesAroundException {
+    public EndGameState transition(State currentState) {
         EndGameState currentEndGameState = (EndGameState) currentState;
         EndGameState nextState = ((EndGameState) currentState).clone();
         /*
@@ -48,7 +49,7 @@ public class KillOperator extends Operator {
         }
 
         if (noEnemiesAround)
-            throw new NoEnemiesAroundException();
+            return null;
 
         return nextState;
     }

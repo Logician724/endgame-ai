@@ -637,6 +637,7 @@ public class EndGameTests {
 
 
 	private boolean applyPlan(String grid, String solution) {
+		
 		char[][] g = convertToGrid(grid);
 		String plan = solution.split(";")[0];
 		plan.replace(" ", "");

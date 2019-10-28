@@ -9,22 +9,23 @@ import exceptions.OperatorFailedException;
 import exceptions.OutOfMapException;
 
 public class LeftOperator extends Operator {
+    private Point mapDimensions;
 
     public LeftOperator(Point mapDimensions) {
-        super(mapDimensions);
+        this.mapDimensions = mapDimensions;
     }
 
     @Override
-    public EndGameState transition(State currentState) throws OperatorFailedException {
+    public EndGameState transition(State currentState) {
         EndGameState nextState = ((EndGameState) currentState).clone();
         Point currentIronManLoc = nextState.getIronManLoc();
         // Check that iron man is not in the first column
         if (currentIronManLoc.y <= 0) {
-            throw new OutOfMapException();
+            return null;
         }
         Point targetIronManLoc = new Point(currentIronManLoc.x, currentIronManLoc.y - 1);
         if (OperatorUtils.PointCollidesWithOtherObjectsOnMap(targetIronManLoc, nextState)) {
-            throw new CellOccupiedException();
+            return null;
         }
         nextState.setIronManLoc(targetIronManLoc);
         return nextState;

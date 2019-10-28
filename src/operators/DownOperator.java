@@ -9,22 +9,23 @@ import search.State;
 import java.awt.Point;
 
 public class DownOperator extends Operator {
+    private Point mapDimensions;
 
     public DownOperator(Point mapDimensions) {
-        super(mapDimensions);
+        this.mapDimensions = mapDimensions;
     }
 
     @Override
-    public EndGameState transition(State currentState) throws OperatorFailedException {
+    public EndGameState transition(State currentState) {
         EndGameState nextState = ((EndGameState) currentState).clone();
         Point currentIronManLoc = nextState.getIronManLoc();
         // Check that iron man is not in the last row
-        if (currentIronManLoc.x >= this.getMapDimensions().x - 1) {
-            throw new OutOfMapException();
+        if (currentIronManLoc.x >= this.mapDimensions.x - 1) {
+            return null;
         }
         Point targetIronManLoc = new Point(currentIronManLoc.x + 1, currentIronManLoc.y);
         if (OperatorUtils.PointCollidesWithOtherObjectsOnMap(targetIronManLoc, nextState)) {
-            throw new CellOccupiedException();
+            return null;
         }
         nextState.setIronManLoc(targetIronManLoc);
         return nextState;
