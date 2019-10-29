@@ -58,7 +58,6 @@ public abstract class Problem {
 
 	public void reset() {
 		visitedStates.clear();
-		expandedNodesCount = -1;
 		nodes.clear();
 	}
 
