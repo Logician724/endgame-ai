@@ -6,9 +6,10 @@ import search.State;
 import endgame.EndGameState;
 
 public class LeftOperator extends Operator {
+	Point mapDimensions;
 
 	public LeftOperator(Point mapDimensions) {
-		super(mapDimensions);
+		this.mapDimensions = mapDimensions;
 	}
 
 	@Override

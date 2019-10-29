@@ -7,9 +7,10 @@ import endgame.EndGameState;
 import search.State;
 
 public class UpOperator extends Operator {
+	Point mapDimensions;
 
 	public UpOperator(Point mapDimensions) {
-		super(mapDimensions);
+		this.mapDimensions = mapDimensions;
 	}
 
 	@Override

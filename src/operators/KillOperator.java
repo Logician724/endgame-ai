@@ -6,9 +6,10 @@ import endgame.EndGameState;
 import search.State;
 
 public class KillOperator extends Operator {
+	Point mapDimensions;
 
 	public KillOperator(Point mapDimensions) {
-		super(mapDimensions);
+		this.mapDimensions = mapDimensions;
 	}
 
 	@Override

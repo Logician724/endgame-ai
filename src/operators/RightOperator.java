@@ -7,9 +7,10 @@ import endgame.EndGameState;
 import search.State;
 
 public class RightOperator extends Operator {
+	Point mapDimensions;
 
 	public RightOperator(Point mapDimensions) {
-		super(mapDimensions);
+		this.mapDimensions = mapDimensions;
 	}
 
 	@Override
@@ -17,7 +18,7 @@ public class RightOperator extends Operator {
 		EndGameState nextState = ((EndGameState) currentState).clone();
 		Point currentIronManLoc = nextState.getIronManLoc();
 		// Check that iron man is not in the last column
-		if (currentIronManLoc.y >= this.getMapDimensions().y - 1) {
+		if (currentIronManLoc.y >= this.mapDimensions.y - 1) {
 			return null;
 		}
 		Point targetIronManLoc = new Point(currentIronManLoc.x, currentIronManLoc.y + 1);
