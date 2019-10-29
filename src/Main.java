@@ -45,17 +45,16 @@ public class Main {
 		default:
 			throw new IllegalArgumentException("Could not recognize the passed strategy");
 		}
-
+		
 		Node node;
 		try {
 			node = endGameProblem.solveUsingSearch(searchStrategy);
 		} catch (SolutionNotFoundException e) {
-			return "Error 404: Solution Not Found";
+			return "There is no solution";
 		}
 
 		ArrayList<Node> nodes = new ArrayList<Node>();
 
-		System.out.println(node.getDepth());
 		nodes.add(node);
 		while (node.getParent() != null) {
 			node = node.getParent();
@@ -78,7 +77,7 @@ public class Main {
 			if(node.getOperator() instanceof KillOperator)
 				route += "kill,";
 			if(node.getOperator() instanceof SnapOperator)
-				route += "snap.";
+				route += "snap";
 			
 
 			if (visualize) {

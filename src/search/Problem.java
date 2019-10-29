@@ -1,7 +1,27 @@
 package search;
 
 import java.util.Queue;
+
+import cells.Cell;
+import cells.IronManCell;
+import cells.IronManStoneCell;
+import cells.IronManThanosCell;
+import cells.StoneCell;
+import cells.ThanosCell;
+import cells.WarriorCell;
+import endgame.EndGameProblem;
+import endgame.EndGameState;
+import operators.CollectOperator;
+import operators.DownOperator;
+import operators.KillOperator;
+import operators.LeftOperator;
+import operators.RightOperator;
+import operators.SnapOperator;
+import operators.UpOperator;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public abstract class Problem {
@@ -28,16 +48,29 @@ public abstract class Problem {
 
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
 		nodes.add(root);
+		Node currentNode = new Node(null);
 		while (!nodes.isEmpty()) {
-			Node currentNode = nodes.poll();
-			if (goalTest(currentNode.getState())) {
+			currentNode = nodes.poll();
+			if (goalTest(currentNode.getState()))
 				return currentNode;
+
+			LinkedList<Node> expandedNodes = expand(currentNode);
+			Iterator<Node> iterator = expandedNodes.iterator();
+			LinkedList<Node> notRepeatedExpandedNodes = new LinkedList<Node>();
+
+			while (iterator.hasNext()) {
+				Node expandedNode = iterator.next();
+
+				if (!visitedStates.add(expandedNode.getState()))
+					continue;
+
+				notRepeatedExpandedNodes.add(expandedNode);
 			}
-			// Add the visited node to the visited nodes hashset to avoid state repetition
-			visitedStates.add((State) currentNode.getState());
-			nodes = strategy.execute(nodes, expand(currentNode));
+
+			nodes = strategy.execute(nodes, notRepeatedExpandedNodes);
 			expandedNodesCount++;
 		}
+
 		throw new SolutionNotFoundException();
 	}
 
@@ -74,5 +107,4 @@ public abstract class Problem {
 	public void setNodes(Queue<Node> nodes) {
 		this.nodes = nodes;
 	}
-
 }
