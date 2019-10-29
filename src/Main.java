@@ -78,7 +78,6 @@ public class Main {
 				route += "kill,";
 			if(node.getOperator() instanceof SnapOperator)
 				route += "snap";
-			
 
 			if (visualize) {
 				for (int i = 0; i < (endGameProblem.getMapDimensions().y * 2); i++)
@@ -94,6 +93,8 @@ public class Main {
 				System.out.println();
 			}
 		}
+
+		route += ";" + node.getCost() + ";" + endGameProblem.getExpandedNodesCount();
 		
 		return route;
 
@@ -166,7 +167,7 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 
 		String grid = "5,5;1,2;3,1;0,2,1,1,2,1,2,2,4,0,4,1;0,3,3,0,3,2,3,4,4,3";
-		String strategy = "ID";
+		String strategy = "BF";
 		boolean visualize = false;
 		long startTime = System.nanoTime();
 

@@ -49,6 +49,7 @@ public abstract class Problem {
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
 		nodes.add(root);
 		Node currentNode = new Node(null);
+		visitedStates.add(currentNode.getState());
 		while (!nodes.isEmpty()) {
 			currentNode = nodes.poll();
 			if (goalTest(currentNode.getState()))
