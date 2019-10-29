@@ -10,14 +10,14 @@ import search.SearchStrategy;
 
 public class BFS extends SearchStrategy {
 
-    public BFS(EndGameProblem problem) {
-        problem.setNodes(new ArrayDeque<Node>());
-    }
+	public BFS(EndGameProblem problem) {
+		problem.setNodes(new ArrayDeque<Node>());
+	}
 
-    @Override
-    public Queue<Node> execute(Queue<Node> nodes, LinkedList<Node> expandedNodes) {
-        expandedNodes.forEach((expandedNode) -> nodes.add(expandedNode));
-        return nodes;
-    }
+	@Override
+	public Queue<Node> execute(Queue<Node> nodes, LinkedList<Node> expandedNodes) {
+		expandedNodes.forEach((expandedNode) -> nodes.add(expandedNode));
+		return nodes;
+	}
 
 }

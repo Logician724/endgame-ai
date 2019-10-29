@@ -2,24 +2,6 @@ package search;
 
 import java.util.Queue;
 
-import cells.Cell;
-import cells.IronManCell;
-import cells.IronManStoneCell;
-import cells.IronManThanosCell;
-import cells.StoneCell;
-import cells.ThanosCell;
-import cells.WarriorCell;
-import endgame.EndGameProblem;
-import endgame.EndGameState;
-import operators.CollectOperator;
-import operators.DownOperator;
-import operators.KillOperator;
-import operators.LeftOperator;
-import operators.RightOperator;
-import operators.SnapOperator;
-import operators.UpOperator;
-
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;

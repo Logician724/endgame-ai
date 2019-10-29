@@ -45,7 +45,7 @@ public class Main {
 		default:
 			throw new IllegalArgumentException("Could not recognize the passed strategy");
 		}
-		
+
 		Node node;
 		try {
 			node = endGameProblem.solveUsingSearch(searchStrategy);
@@ -63,20 +63,20 @@ public class Main {
 
 		while (!nodes.isEmpty()) {
 			node = nodes.remove(nodes.size() - 1);
-			
-			if(node.getOperator() instanceof UpOperator)
+
+			if (node.getOperator() instanceof UpOperator)
 				route += "up,";
-			if(node.getOperator() instanceof DownOperator)
+			if (node.getOperator() instanceof DownOperator)
 				route += "down,";
-			if(node.getOperator() instanceof LeftOperator)
+			if (node.getOperator() instanceof LeftOperator)
 				route += "left,";
-			if(node.getOperator() instanceof RightOperator)
+			if (node.getOperator() instanceof RightOperator)
 				route += "right,";
-			if(node.getOperator() instanceof CollectOperator)
+			if (node.getOperator() instanceof CollectOperator)
 				route += "collect,";
-			if(node.getOperator() instanceof KillOperator)
+			if (node.getOperator() instanceof KillOperator)
 				route += "kill,";
-			if(node.getOperator() instanceof SnapOperator)
+			if (node.getOperator() instanceof SnapOperator)
 				route += "snap";
 
 			if (visualize) {
@@ -95,7 +95,7 @@ public class Main {
 		}
 
 		route += ";" + node.getCost() + ";" + endGameProblem.getExpandedNodesCount();
-		
+
 		return route;
 
 	}

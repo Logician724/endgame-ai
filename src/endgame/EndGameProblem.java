@@ -1,13 +1,9 @@
 package endgame;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Queue;
 
 import cells.*;
-import exceptions.OperatorFailedException;
-import exceptions.ThanosDoesNotExistException;
 import search.Node;
 import search.Operator;
 import search.Problem;
@@ -45,11 +41,9 @@ public class EndGameProblem extends Problem {
 		int nextWarriorCount = EndGameUtils.CountEnemiesAround((EndGameState) nextState);
 		nextStateCost += nextWarriorCount;
 
-		try {
-			if (EndGameUtils.IsThanosAround((EndGameState) nextState)) {
-				nextStateCost += 5;
-			}
-		} catch (ThanosDoesNotExistException e) {
+		if (EndGameUtils.IsThanosAround((EndGameState) nextState)) {
+			nextStateCost += 5;
+		} else {
 			nextStateCost = 0;
 		}
 
@@ -66,16 +60,16 @@ public class EndGameProblem extends Problem {
 		LinkedList<Node> expandedNodes = new LinkedList<Node>();
 
 		for (Operator currentOperator : getOperators()) {
-			try {
-				EndGameState newState = (EndGameState) currentOperator.transition(currentNode.getState());
-				int newStateCost = pathCost(currentNode, newState, currentOperator);
-				if (newStateCost >= MAX_COST) {
-					continue;
-				}
-				expandedNodes.add(new Node(newState, currentNode, currentOperator, newStateCost));
-			} catch (OperatorFailedException e) {
+			EndGameState newState = (EndGameState) currentOperator.transition(currentNode.getState());
+
+			if (newState == null)
+				continue;
+
+			int newStateCost = pathCost(currentNode, newState, currentOperator);
+			if (newStateCost >= MAX_COST) {
 				continue;
 			}
+			expandedNodes.add(new Node(newState, currentNode, currentOperator, newStateCost));
 		}
 
 		return expandedNodes;

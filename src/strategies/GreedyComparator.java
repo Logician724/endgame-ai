@@ -6,10 +6,10 @@ import search.Node;
 
 public class GreedyComparator implements Comparator<Node> {
 
-    @Override
-    public int compare(Node currentNode, Node otherNode) {
+	@Override
+	public int compare(Node currentNode, Node otherNode) {
 
-        return currentNode.getEstimate() - otherNode.getEstimate();
-    }
+		return currentNode.getEstimate() - otherNode.getEstimate();
+	}
 
 }
