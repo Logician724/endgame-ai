@@ -30,27 +30,16 @@ public abstract class Problem {
 
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
 		nodes.add(root);
-		visitedStates.add(root.getState());
 		while (!nodes.isEmpty()) {
 			Node currentNode = nodes.poll();
-			if (goalTest(currentNode.getState()))
-				return currentNode;
-
-			LinkedList<Node> expandedNodes = expand(currentNode);
-			Iterator<Node> iterator = expandedNodes.iterator();
-			LinkedList<Node> notRepeatedExpandedNodes = new LinkedList<Node>();
-
-			while (iterator.hasNext()) {
-				Node expandedNode = iterator.next();
-
-				if (!visitedStates.add(expandedNode.getState()))
-					continue;
-
-				notRepeatedExpandedNodes.add(expandedNode);
+			if(visitedStates.add(currentNode.getState())) {
+				if (goalTest(currentNode.getState()))
+					return currentNode;
+				nodes = strategy.execute(nodes, expand(currentNode));
+				expandedNodesCount++;
+			}else {
+				nodes = strategy.execute(nodes, new LinkedList<Node>());
 			}
-
-			nodes = strategy.execute(nodes, notRepeatedExpandedNodes);
-			expandedNodesCount++;
 		}
 
 		throw new SolutionNotFoundException();
