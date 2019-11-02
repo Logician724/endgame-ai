@@ -2,8 +2,11 @@ package search;
 
 import java.util.Queue;
 
+import strategies.ASS;
+import strategies.GRS;
+import strategies.UCS;
+
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public abstract class Problem {
@@ -30,26 +33,29 @@ public abstract class Problem {
 
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
 		nodes.add(root);
-		visitedStates.add(root.getState());
+
+		boolean isCostBasedSearchStrategy = strategy instanceof UCS || strategy instanceof GRS
+				|| strategy instanceof ASS;
+
+		if (!isCostBasedSearchStrategy)
+			visitedStates.add(root.getState());
+
 		while (!nodes.isEmpty()) {
 			Node currentNode = nodes.poll();
+
+			if (isCostBasedSearchStrategy)
+				if (!visitedStates.add(currentNode.getState()))
+					continue;
+
 			if (goalTest(currentNode.getState()))
 				return currentNode;
 
 			LinkedList<Node> expandedNodes = expand(currentNode);
-			Iterator<Node> iterator = expandedNodes.iterator();
-			LinkedList<Node> notRepeatedExpandedNodes = new LinkedList<Node>();
 
-			while (iterator.hasNext()) {
-				Node expandedNode = iterator.next();
+			if (!isCostBasedSearchStrategy)
+				expandedNodes.removeIf(expandedNode -> (!visitedStates.add(expandedNode.getState())));
 
-				if (!visitedStates.add(expandedNode.getState()))
-					continue;
-
-				notRepeatedExpandedNodes.add(expandedNode);
-			}
-
-			nodes = strategy.execute(nodes, notRepeatedExpandedNodes);
+			nodes = strategy.execute(nodes, expandedNodes);
 			expandedNodesCount++;
 		}
 
