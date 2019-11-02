@@ -2,8 +2,11 @@ package search;
 
 import java.util.Queue;
 
+import strategies.ASS;
+import strategies.GRS;
+import strategies.UCS;
+
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public abstract class Problem {
@@ -30,16 +33,30 @@ public abstract class Problem {
 
 	public Node solveUsingSearch(SearchStrategy strategy) throws SolutionNotFoundException {
 		nodes.add(root);
+
+		boolean isCostBasedSearchStrategy = strategy instanceof UCS || strategy instanceof GRS
+				|| strategy instanceof ASS;
+
+		if (!isCostBasedSearchStrategy)
+			visitedStates.add(root.getState());
+
 		while (!nodes.isEmpty()) {
 			Node currentNode = nodes.poll();
-			if(visitedStates.add(currentNode.getState())) {
-				if (goalTest(currentNode.getState()))
-					return currentNode;
-				nodes = strategy.execute(nodes, expand(currentNode));
-				expandedNodesCount++;
-			}else {
-				nodes = strategy.execute(nodes, new LinkedList<Node>());
-			}
+
+			if (isCostBasedSearchStrategy)
+				if (!visitedStates.add(currentNode.getState()))
+					continue;
+
+			if (goalTest(currentNode.getState()))
+				return currentNode;
+
+			LinkedList<Node> expandedNodes = expand(currentNode);
+
+			if (!isCostBasedSearchStrategy)
+				expandedNodes.removeIf(expandedNode -> (!visitedStates.add(expandedNode.getState())));
+
+			nodes = strategy.execute(nodes, expandedNodes);
+			expandedNodesCount++;
 		}
 
 		throw new SolutionNotFoundException();
