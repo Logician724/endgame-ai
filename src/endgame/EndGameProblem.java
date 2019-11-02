@@ -43,8 +43,6 @@ public class EndGameProblem extends Problem {
 
 		if (EndGameUtils.IsThanosAround((EndGameState) nextState)) {
 			nextStateCost += 5;
-		} else {
-			nextStateCost += 0;
 		}
 
 		return currentNode.getCost() + nextStateCost;
